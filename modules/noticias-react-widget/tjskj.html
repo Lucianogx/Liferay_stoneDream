@@ -1,0 +1,181 @@
+<style>
+  .adt-quartos-container {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 10px;
+  }
+
+  .adt-quartos-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 32px;
+    margin: 0 auto;
+  }
+
+  .quarto-item {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+    transition: transform 0.2s, box-shadow 0.2s;
+    width: 340px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    min-height: 420px;
+  }
+  .quarto-item:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 12px 32px rgba(26, 115, 232, 0.18);
+  }
+
+  .quarto-img-topo {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
+    background: #e9ecef;
+    display: block;
+  }
+
+  .quarto-header {
+    width: 100%;
+    text-align: center;
+    padding: 18px 18px 8px 18px;
+    background: none;
+    color: #1a1a1a;
+  }
+  .quarto-nome {
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin: 0;
+    color: #1a73e8;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    transition: color 0.2s;
+  }
+  .quarto-nome:hover {
+    color: #0052cc;
+    text-decoration: underline;
+  }
+
+  .quarto-content {
+    padding: 0 18px 18px 18px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  .quarto-descricao {
+    font-size: 15px;
+    color: #444;
+    margin: 12px 0 18px 0;
+    line-height: 1.6;
+    width: 100%;
+    max-height: 120px;
+    overflow-y: auto;
+    text-align: left;
+    background: #f8fafc;
+    border-radius: 6px;
+    padding: 10px 12px;
+  }
+  .quarto-btn-detalhes {
+    background: linear-gradient(90deg, #1a73e8 60%, #0052cc 100%);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 28px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: auto;
+    box-shadow: 0 2px 8px rgba(26, 115, 232, 0.10);
+    transition: background 0.2s, transform 0.2s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .quarto-btn-detalhes:hover {
+    background: linear-gradient(90deg, #0052cc 60%, #1a73e8 100%);
+    transform: translateY(-2px) scale(1.04);
+    color: #fff;
+    text-decoration: none;
+  }
+  .quarto-alerta {
+    background-color: #fff4e5;
+    border-left: 4px solid #ff9800;
+    color: #663c00;
+    padding: 16px 20px;
+    border-radius: 4px;
+    font-weight: 500;
+    max-width: 600px;
+    margin: 40px auto;
+    text-align: center;
+  }
+</style>
+
+<#-- Definição da macro excerpt -->
+<#macro excerpt abstract maxLength=100>
+    <#if abstract?has_content>
+        <#if abstract?length <= maxLength>
+            ${abstract}
+        <#else>
+            ${abstract?substring(0, maxLength)}...
+        </#if>
+    <#else>
+        Nome não disponível
+    </#if>
+</#macro>
+
+<div class="adt-quartos-container">
+  <#if entries?has_content>
+    <div class="adt-quartos-grid">
+      <#list entries as curEntry>
+        <#assign assetRenderer = curEntry.getAssetRenderer() />
+        <#if assetRenderer?? && assetRenderer.getClassName() == "com.liferay.journal.model.JournalArticle">
+          <#assign article = assetRenderer.getArticle()>
+          <#if article??>
+            <#assign doc_xml = saxReaderUtil.read(article.getContent()) />
+            <#assign nome_quarto_node = doc_xml.selectSingleNode("/root/dynamic-element[@field-reference='nomeQuarto']/dynamic-content")!"" />
+            <#assign nome_quarto = (nome_quarto_node.getText())!"" />
+            <#assign descricao_quarto_node = doc_xml.selectSingleNode("/root/dynamic-element[@field-reference='descricaoQuarto']/dynamic-content")!"" />
+            <#assign descricao_quarto = (descricao_quarto_node.getText())!"" />
+            <#assign imagem_node = doc_xml.selectSingleNode("/root/dynamic-element[@field-reference='imageQuarto']/dynamic-content")!"" />
+            <#assign imagem_json = (imagem_node.getText())!"" />
+        <#assign viewURL = assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, assetRenderer, curEntry, !stringUtil.equals(assetLinkBehavior, "showFullContent"))?keep_before("?redirect=") />
+
+            <div class="quarto-item">
+              <#if imagem_json?has_content>
+                <#assign imageJSON = jsonFactoryUtil.createJSONObject(imagem_json) />
+                <#assign imageURL = imageJSON.getString("url")!"" />
+                <#assign imageAlt = imageJSON.getString("alt")!nome_quarto />
+                <#if imageURL?has_content>
+                  <img src="${imageURL}" alt="${imageAlt}" class="quarto-img-topo" />
+                </#if>
+              </#if>
+              <div class="quarto-header">
+                <a href="${viewURL}" class="quarto-nome" target="_parent" data-senna-off="true">
+                  <@excerpt abstract=nome_quarto maxLength=50/>
+                </a>
+            </div>
+              <div class="quarto-content">
+                <div class="quarto-descricao">
+                  <#if descricao_quarto?has_content>
+                    ${descricao_quarto}
+                </#if>
+                </div>
+                <a href="${viewURL}" class="quarto-btn-detalhes" target="_parent" data-senna-off="true">Ver detalhes</a>
+              </div>
+            </div>
+          </#if>
+        </#if>
+      </#list>
+    </div>
+  <#else>
+    <div class="quarto-alerta" role="alert">Não foram encontrados conteúdos.</div>
+  </#if>
+</div>

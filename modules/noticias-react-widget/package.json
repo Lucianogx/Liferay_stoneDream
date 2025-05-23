@@ -1,0 +1,22 @@
+{
+  "name": "noticias-react-widget",
+  "version": "1.0.0",
+  "description": "Noticias React Widget",
+  "dependencies": {
+    "@liferay/portal-7.4": "*",
+    "axios": "^1.9.0"
+  },
+  "portlet": {
+    "com.liferay.portlet.display-category": "simplify",
+    "com.liferay.portlet.header-portlet-css": "/css/styles.css",
+    "com.liferay.portlet.instanceable": true,
+    "javax.portlet.name": "noticiasreactwidget",
+    "javax.portlet.security-role-ref": "power-user,user",
+    "javax.portlet.resource-bundle": "content.Language"
+  },
+  "scripts": {
+    "build": "liferay build",
+    "clean": "liferay clean",
+    "deploy": "liferay deploy"
+  }
+}

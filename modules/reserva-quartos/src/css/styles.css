@@ -1,0 +1,181 @@
+.pre {
+	font-family: monospace;
+	white-space: pre;
+}
+
+.tag {
+	font-weight: bold;
+	margin-right: 1em;
+}
+
+.value {
+	font-family: monospace;
+}
+
+.quartos-wrapper {
+	width: 100%;
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 40px 10px;
+}
+
+.quartos-grid {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 32px;
+	justify-content: center;
+}
+
+.quarto-card {
+	display: flex;
+	flex-direction: column;
+	border-radius: 18px;
+	padding: 28px 24px 24px 24px;
+	align-items: flex-start;
+	background-color: #fff;
+	box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+	margin-bottom: 0;
+	transition: transform 0.2s, box-shadow 0.2s;
+	width: 350px;
+	min-height: 420px;
+	position: relative;
+}
+
+.quarto-card:hover {
+	box-shadow: 0 12px 32px rgba(26, 115, 232, 0.18);
+	transform: translateY(-8px) scale(1.03);
+}
+
+.quarto-img-container {
+	width: 100%;
+	height: 180px;
+	margin: 0 0 18px 0;
+	border-radius: 12px;
+	overflow: hidden;
+	background: #e9ecef;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.quarto-img-container img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border-radius: 12px;
+}
+
+.quarto-nome {
+	font-size: 1.35rem;
+	font-weight: 700;
+	color: #1a73e8;
+	margin-bottom: 8px;
+	width: 100%;
+	text-align: center;
+	letter-spacing: 0.5px;
+}
+
+.quarto-descricao {
+	font-size: 15px;
+	color: #444;
+	margin: 12px 0 18px 0;
+	line-height: 1.6;
+	width: 100%;
+	max-height: 120px;
+	overflow-y: auto;
+	text-align: left;
+	background: #f8fafc;
+	border-radius: 6px;
+	padding: 10px 12px;
+}
+
+.quarto-info {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	width: 100%;
+	padding-top: 12px;
+	margin-top: 18px;
+	border-top: 1px solid #e9ecef;
+	font-size: 15px;
+	color: #6b6c7e;
+	justify-content: space-between;
+}
+
+.quarto-badge {
+	display: inline-block;
+	background: linear-gradient(90deg, #1a73e8 60%, #0052cc 100%);
+	color: #fff;
+	font-size: 13px;
+	font-weight: 600;
+	border-radius: 6px;
+	padding: 4px 14px;
+	margin-bottom: 0;
+	letter-spacing: 0.5px;
+	box-shadow: 0 2px 8px rgba(26, 115, 232, 0.10);
+}
+
+.quarto-comodidades {
+	margin-top: 10px;
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.quarto-comodidade {
+	background: #e3eafc;
+	color: #1a73e8;
+	font-size: 13px;
+	border-radius: 5px;
+	padding: 3px 10px;
+	font-weight: 500;
+	display: flex;
+	align-items: center;
+	gap: 0.4rem;
+}
+
+.comodidade-icone {
+	font-size: 1.1rem;
+	color: #1a73e8;
+}
+
+.quarto-status {
+	margin-top: 16px;
+	font-weight: 700;
+	font-size: 15px;
+	padding: 6px 16px;
+	border-radius: 8px;
+	align-self: flex-end;
+}
+
+.quarto-status.disponivel {
+	background: #e6f9ec;
+	color: #1a8f3c;
+}
+
+.quarto-status.indisponivel {
+	background: #ffeaea;
+	color: #d32f2f;
+}
+
+@media (max-width: 900px) {
+	.quartos-grid {
+		gap: 18px;
+	}
+	.quarto-card {
+		width: 100%;
+		min-width: 0;
+		max-width: 100%;
+		padding: 18px 8px 18px 8px;
+	}
+}
+
+@media (max-width: 600px) {
+	.quartos-wrapper {
+		padding: 10px 2px;
+	}
+	.quarto-card {
+		padding: 10px 2px 10px 2px;
+	}
+}

@@ -1,0 +1,13 @@
+{
+	"$schema": "https://raw.githubusercontent.com/liferay/liferay-frontend-projects/master/maintenance/projects/js-toolkit/resources/schemas/configuration.schema.json",
+	"system": {
+		"fields": {
+			"number": {
+				"default": "2",
+				"name": "Número de notícias",
+				"required": false,
+				"type": "number"
+			}
+		}
+	}
+}
